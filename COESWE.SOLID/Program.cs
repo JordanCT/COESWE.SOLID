@@ -10,11 +10,19 @@ namespace COESWE.SOLID
         {
             var cliente = new Cliente("Cruz", "Tarazona", "Jordan");
             cliente.AgregarCuenta(200);
-
             var validador = new ClienteValidator();
             var resultado = validador.Validate(cliente);
             if (resultado.IsValid)
+            {
+                var disponible = 0m;
+                var cuentaId = cliente.Cuentas.FirstOrDefault().CuentaId;
+                for (int i = 0; i < 10; i++)
+                {
+                    disponible = cliente.ConsultarSaldoDisponible(cuentaId);
+                }
                 PrintProperties(cliente, 0);
+                Console.WriteLine($"El saldo de la cuenta es: {disponible}");
+            }
             else
                 foreach (var error in resultado.Errors)
                 {
