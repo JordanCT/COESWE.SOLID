@@ -21,14 +21,12 @@
 
         public void AgregarCuenta(decimal saldo)
         {
-            string tipo;
             if (saldo > 400)
-                tipo = "CuentaSignature";
+                _cuentas.Add(new CuentaSignature(ClienteId, saldo));
             else if (saldo > 200)
-                tipo = "CuentaPremium";
+                _cuentas.Add(new CuentaPremium(ClienteId, saldo));
             else
-                tipo = "CuentaClasica";
-            _cuentas.Add(new Cuenta(ClienteId, saldo, tipo));
+                _cuentas.Add(new CuentaClasica(ClienteId, saldo));
         }
 
         public decimal ConsultarSaldoDisponible(Guid cuentaId)

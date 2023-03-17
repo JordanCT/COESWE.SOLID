@@ -1,31 +1,23 @@
 ﻿namespace COESWE.SOLID.IMP
 {
-    public class Cuenta
+    public abstract class Cuenta
     {
         public Guid CuentaId { get; private set; }
         public Guid ClienteId { get; private set; }
         public decimal SaldoDisponible { get; private set; }
-        public string Tipo { get; private set; }
+        public string Tipo { get; protected set; }
 
-        public Cuenta(Guid clienteId, decimal saldo, string tipo)
+        public Cuenta(Guid clienteId, decimal saldo)
         {
             CuentaId = Guid.NewGuid();
             ClienteId = clienteId;
             SaldoDisponible = saldo;
-            Tipo = tipo;
         }
-        public void ModificarSaldoDisponible(decimal saldoDisponible)
+        public virtual void ModificarSaldoDisponible(decimal saldoDisponible)
         {
             SaldoDisponible = saldoDisponible;
         }
 
-        public decimal ObtenerSaldoDisponible()
-        {
-            if (Tipo == "CuentaPremium")
-                ModificarSaldoDisponible(SaldoDisponible - 0.1m);
-            else if (Tipo == "CuentaClasica")
-                ModificarSaldoDisponible(SaldoDisponible - 1);
-            return SaldoDisponible;
-        }
+        public abstract decimal ObtenerSaldoDisponible();
     }
 }
