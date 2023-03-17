@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace COESWE.SOLID.IMP
+﻿namespace COESWE.SOLID.IMP
 {
-    public class CuentaPremium : Cuenta
+    public class CuentaPremium : CuentaComisionable
     {
         public CuentaPremium(Guid clienteId, decimal saldo) 
             : base(clienteId, saldo)

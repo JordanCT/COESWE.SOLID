@@ -1,6 +1,6 @@
 ﻿namespace COESWE.SOLID.IMP
 {
-    public class CuentaClasica : Cuenta
+    public class CuentaClasica : CuentaComisionable
     {
         public CuentaClasica(Guid clienteId, decimal saldo) 
             : base(clienteId, saldo)
