@@ -2,25 +2,26 @@
 {
     public class Cliente
     {
-        public Guid ClienteId { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string Nombres { get; set; }
-        public List<Cuenta> Cuentas { get; set; }
+        public Guid ClienteId { get; private set; }
+        public string ApellidoPaterno { get; private set; }
+        public string ApellidoMaterno { get; private set; }
+        public string Nombres { get; private set; }
 
-        public bool Validar()
+        private readonly List<Cuenta> _cuentas;
+        public IReadOnlyCollection<Cuenta> Cuentas => _cuentas;
+
+        public Cliente(string apellidoPaterno, string apellidoMaterno, string nombres)
         {
-            if (string.IsNullOrWhiteSpace(ApellidoMaterno))
-                return false;
-            if (string.IsNullOrWhiteSpace(ApellidoPaterno))
-                return false;
-            if (string.IsNullOrWhiteSpace(Nombres))
-                return false;
-            return true;
+            ClienteId = Guid.NewGuid();
+            ApellidoPaterno = apellidoPaterno;
+            ApellidoMaterno = apellidoMaterno;
+            Nombres = nombres;
+            _cuentas = new List<Cuenta>();
         }
-        public void AgregarCuenta(Cuenta cuenta)
+
+        public void AgregarCuenta(decimal saldo)
         {
-            Cuentas.Add(cuenta);
+            _cuentas.Add(new Cuenta(ClienteId, saldo));
         }
     }
 }

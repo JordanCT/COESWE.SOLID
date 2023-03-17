@@ -8,20 +8,18 @@ namespace COESWE.SOLID
     {
         static void Main(string[] args)
         {
-            var cliente = new Cliente();
-            cliente.ClienteId = Guid.NewGuid();
-            cliente.ApellidoPaterno = "Cruz";
-            cliente.ApellidoMaterno = "Tarazona";
-            cliente.Nombres = "Jordan";
-            cliente.Cuentas = new List<Cuenta>();
-            var cuenta = new Cuenta();
-            cuenta.ClienteId = cliente.ClienteId;
-            cuenta.CuentaId = Guid.NewGuid();
-            cuenta.SaldoDisponible = 200;
-            cliente.Cuentas.Add(cuenta);
-            if (cliente.Validar())
-                PrintProperties(cliente, 0);
+            var cliente = new Cliente("Cruz", "Tarazona", "Jordan");
+            cliente.AgregarCuenta(200);
 
+            var validador = new ClienteValidator();
+            var resultado = validador.Validate(cliente);
+            if (resultado.IsValid)
+                PrintProperties(cliente, 0);
+            else
+                foreach (var error in resultado.Errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
         }
 
         private static void PrintProperties(object obj, int indent)
