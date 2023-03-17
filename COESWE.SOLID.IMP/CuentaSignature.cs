@@ -14,9 +14,9 @@ namespace COESWE.SOLID.IMP
             Tipo = nameof(CuentaSignature);
         }
 
-        public override decimal ObtenerSaldoDisponible()
+        public override void AgregarComision()
         {
-            return SaldoDisponible;
+            throw new NotImplementedException("Este tipo de cuenta no es comisionable");
         }
     }
 }

@@ -8,10 +8,11 @@
             Tipo = nameof(CuentaClasica);
         }
 
-        public override decimal ObtenerSaldoDisponible()
+        public override void AgregarComision()
         {
-            ModificarSaldoDisponible(SaldoDisponible - 1);
-            return SaldoDisponible;
+            var comision = new Comision(CuentaId, 1);
+            _comisiones.Add(comision);
+            ModificarSaldoDisponible(SaldoDisponible - comision.Monto);
         }
     }
 }

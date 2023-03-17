@@ -14,10 +14,11 @@ namespace COESWE.SOLID.IMP
             Tipo = nameof(CuentaPremium);
         }
 
-        public override decimal ObtenerSaldoDisponible()
+        public override void AgregarComision()
         {
-            ModificarSaldoDisponible(SaldoDisponible - 0.1m);
-            return SaldoDisponible;
+            var comision = new Comision(CuentaId, 0.1m);
+            _comisiones.Add(comision);
+            ModificarSaldoDisponible(SaldoDisponible - comision.Monto);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace COESWE.SOLID
         static void Main(string[] args)
         {
             var cliente = new Cliente("Cruz", "Tarazona", "Jordan");
-            cliente.AgregarCuenta(200);
+            cliente.AgregarCuenta(800);
             var validador = new ClienteValidator();
             var resultado = validador.Validate(cliente);
             if (resultado.IsValid)
