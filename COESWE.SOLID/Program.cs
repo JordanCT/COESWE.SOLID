@@ -1,4 +1,5 @@
 ﻿using COESWE.SOLID.IMP;
+using COESWE.SOLID.IMP.Repositorio;
 using System.Collections;
 using System.Reflection;
 
@@ -9,7 +10,7 @@ namespace COESWE.SOLID
         static void Main(string[] args)
         {
             var cliente = new Cliente("Cruz", "Tarazona", "Jordan");
-            cliente.AgregarCuenta(800);
+            cliente.AgregarCuenta(400);
             var validador = new ClienteValidator();
             var resultado = validador.Validate(cliente);
             if (resultado.IsValid)
@@ -22,6 +23,11 @@ namespace COESWE.SOLID
                 }
                 PrintProperties(cliente, 0);
                 Console.WriteLine($"El saldo de la cuenta es: {disponible}");
+
+                IRepository<Cliente> repositorioCliente = new RepositoryCliente("Cliente.txt");
+                repositorioCliente.Add(cliente);
+                repositorioCliente.Save();
+                repositorioCliente.GetAll();
             }
             else
                 foreach (var error in resultado.Errors)
