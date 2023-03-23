@@ -24,10 +24,13 @@ namespace COESWE.SOLID
                 PrintProperties(cliente, 0);
                 Console.WriteLine($"El saldo de la cuenta es: {disponible}");
 
-                IRepository<Cliente> repositorioCliente = new RepositoryCliente("Cliente.txt");
+                IRepositoryActionCliente repositorioCliente = new RepositoryActionCliente("Cliente.txt");
                 repositorioCliente.Add(cliente);
                 repositorioCliente.Save();
-                repositorioCliente.GetAll();
+
+                IRepositoryQueryCliente repositorioConsultaCliente = new RepositoryQueryCliente("Cliente.txt");
+                var listaCliente = repositorioConsultaCliente.GetAll();
+                Console.WriteLine($"Se encontró {listaCliente.Count} client(s) guardados");
             }
             else
                 foreach (var error in resultado.Errors)

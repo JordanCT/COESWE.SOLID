@@ -2,11 +2,11 @@
 
 namespace COESWE.SOLID.IMP.Repositorio
 {
-    public class RepositoryCliente : IRepository<Cliente>
+    public class RepositoryActionCliente : IRepositoryActionCliente
     {
         private readonly List<Cliente> _listaCliente;
         private readonly StreamWriter _writer;
-        public RepositoryCliente(string conexion)
+        public RepositoryActionCliente(string conexion)
         {
             _writer = new StreamWriter(conexion);
             _listaCliente = new List<Cliente>();
@@ -24,16 +24,6 @@ namespace COESWE.SOLID.IMP.Repositorio
         public void Update(Cliente entity)
         {
             _listaCliente[_listaCliente.FindIndex(x => x.ClienteId == entity.ClienteId)] = entity;
-        }
-
-        public Cliente Get(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Cliente> GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public void Save()
