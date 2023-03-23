@@ -1,5 +1,7 @@
 ﻿using COESWE.SOLID.IMP;
+using COESWE.SOLID.IMP.Application;
 using COESWE.SOLID.IMP.Repositorio;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections;
 using System.Reflection;
 
@@ -7,6 +9,7 @@ namespace COESWE.SOLID
 {
     internal class Program
     {
+        private static ServiceProvider serviceProvider;
         static void Main(string[] args)
         {
             var cliente = new Cliente("Cruz", "Tarazona", "Jordan");
@@ -24,13 +27,12 @@ namespace COESWE.SOLID
                 PrintProperties(cliente, 0);
                 Console.WriteLine($"El saldo de la cuenta es: {disponible}");
 
-                IRepositoryActionCliente repositorioCliente = new RepositoryActionCliente("Cliente.txt");
-                repositorioCliente.Add(cliente);
-                repositorioCliente.Save();
+                SetupDI();
+                var serviceAction = serviceProvider.GetService<IClienteActionService>();
+                serviceAction.Guardar(cliente);
 
-                IRepositoryQueryCliente repositorioConsultaCliente = new RepositoryQueryCliente("Cliente.txt");
-                var listaCliente = repositorioConsultaCliente.GetAll();
-                Console.WriteLine($"Se encontró {listaCliente.Count} client(s) guardados");
+                var serviceQuery = serviceProvider.GetService<IClienteQueryService>();
+                Console.WriteLine($"Se encontró {serviceQuery.TotalClientes()} client(s) guardados");
             }
             else
                 foreach (var error in resultado.Errors)
@@ -70,6 +72,16 @@ namespace COESWE.SOLID
                     }
                 }
             }
+        }
+
+        private static void SetupDI()
+        {
+            serviceProvider = new ServiceCollection()
+                .AddSingleton<IRepositoryActionCliente>(x => new RepositoryActionCliente("Cliente.txt"))
+                .AddSingleton<IRepositoryQueryCliente>(x => new RepositoryQueryCliente("Cliente.txt"))
+                .AddSingleton<IClienteActionService, ClienteActionService>()
+                .AddSingleton<IClienteQueryService, ClienteQueryService>()
+                .BuildServiceProvider();
         }
     }
 }
